@@ -38,7 +38,7 @@ int main() {
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK)return -1;
 
-    Shader hgShader("../shaders/hg.vert", "../shaders/hg.frag");
+    Shader hgShader("shaders/hg.vert", "shaders/hg.frag");
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
