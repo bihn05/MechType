@@ -5,17 +5,17 @@
 #include <iostream>
 
 const int WIDTH = 800;
-const int HEIGHT = 600;
+const int HEIGHT = 800;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
 float vertices[] = {
-    1.0f, 1.0f, 0.0f,
-    1.0f,-1.0f, 0.0f,
-   -1.0f,-1.0f, 0.0f,
-   -1.0f, 1.0f, 0.0f
+     0.7f,  0.1f, 0.0f,  // 右上
+     0.7f, -0.1f, 0.0f,  // 右下
+    -0.7f, -0.1f, 0.0f,  // 左下
+    -0.7f,  0.1f, 0.0f   // 左上
 };
 unsigned int indices[] = {0,1,3,1,2,3};
 unsigned int VBO, VAO, EBO;
