@@ -79,6 +79,7 @@ int main() {
         
         glm::vec2 start = glm::vec2({-0.7f, 0.0f});
         glm::vec3 color = glm::vec3({0.0f, 1.0f, 0.0f});
+
         drawBone(hgShader, start, 0.5f, color);
 
         glfwSwapBuffers(window);
