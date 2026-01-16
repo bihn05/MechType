@@ -2,6 +2,7 @@
 #include "shader.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
 const int WIDTH = 800;
@@ -12,13 +13,27 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 }
 
 float vertices[] = {
-     0.7f,  0.1f, 0.0f,  // 右上
-     0.7f, -0.1f, 0.0f,  // 右下
-    -0.7f, -0.1f, 0.0f,  // 左下
-    -0.7f,  0.1f, 0.0f   // 左上
+     1.0f,  1.0f, 0.0f,  // 右上
+     1.0f, -1.0f, 0.0f,  // 右下
+    -1.0f, -1.0f, 0.0f,  // 左下
+    -1.0f,  1.0f, 0.0f   // 左上
 };
 unsigned int indices[] = {0,1,3,1,2,3};
 unsigned int VBO, VAO, EBO;
+void drawBone(Shader &s, glm::vec2 startPos, float length, glm::vec3 color) {
+    s.use();
+
+    glUniform3fv(glGetUniformLocation(s.ID, "u_color"), 1, glm::value_ptr(color));
+
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(startPos, 0.0f));
+    model = glm::scale(model, glm::vec3(length, 1.0f, 1.0f));
+
+    glUniformMatrix4fv(glGetUniformLocation(s.ID, "u_model"), 1, GL_FALSE, glm::value_ptr(model));
+
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}
 int main() {
     if (!glfwInit())return -1;
 
@@ -61,14 +76,10 @@ int main() {
             glfwSetWindowShouldClose(window, true);
         
         glClear(GL_COLOR_BUFFER_BIT);
-
-        hgShader.use();
-
-        int tightnessLoc = glGetUniformLocation(hgShader.ID, "u_tightness");
-        glUniform1f(tightnessLoc, 0.4f); // 0.4 的收缩力度，类似凹透镜
-
-        glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        
+        glm::vec2 start = glm::vec2({-0.7f, 0.0f});
+        glm::vec3 color = glm::vec3({0.0f, 1.0f, 0.0f});
+        drawBone(hgShader, start, 0.5f, color);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
