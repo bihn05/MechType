@@ -7,14 +7,12 @@
 #define WIDTH (640)
 
 void transformStrokeToScreen(strokeBase& stroke, float width, float height, float padding = 40.f) {
-    // 直接修改shape的点
     sf::ConvexShape& shape = stroke.shape;
     unsigned int pointCount = shape.getPointCount();
     
     for (unsigned int i = 0; i < pointCount; ++i) {
         sf::Vector2f point = shape.getPoint(i);
         
-        // 从[-1, 1]转换到屏幕坐标
         float screenX = padding + (point.x + 1.0f) / 2.0f * (width - 2 * padding);
         float screenY = padding + (1.0f - point.y) / 2.0f * (height - 2 * padding);
         
@@ -25,14 +23,15 @@ void transformStrokeToScreen(strokeBase& stroke, float width, float height, floa
 int main() {
 
     sf::RenderWindow window(sf::VideoMode(WIDTH, WIDTH), "MTD");
-    window.setFramerateLimit(30);
+    window.setFramerateLimit(10);
 
     TransformHelper transformer(WIDTH, WIDTH, 0.f);
     
     strokeHeng st;
     st.startPos = sf::Vector2f(-0.7f, 0);
-    st.thick = 0.1f;
-    st.length = 1.4f;
+    st.t = 0.03f;
+    st.s = 0.02f;
+    st.l = 1.4f;
 
     while (window.isOpen()) {
         sf::Event event;

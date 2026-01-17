@@ -10,9 +10,9 @@ class strokeBase {
     int id;
     int type;
     sf::Vector2f startPos;
-    float length;
-    float thick;
-    float style;
+    float l;
+    float t;
+    float s;
     sf::ConvexShape shape;
     
     strokeBase();
