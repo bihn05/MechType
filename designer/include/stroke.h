@@ -5,7 +5,10 @@
 #include <SFML/Graphics.hpp>
 #include "transform.h"
 
-class strokeBase {
+#define STROKE_NONE 0
+#define STROKE_HENG 1
+
+class stroke {
     public:
     int id;
     int type;
@@ -15,15 +18,18 @@ class strokeBase {
     float s;
     sf::ConvexShape shape;
     
-    strokeBase();
-    virtual ~strokeBase() = default;
+    stroke();
+    ~stroke();
 
-    virtual void generateShape() = 0;
-};
+    void generateShape();
 
-class strokeHeng : public strokeBase {
-    public:
-    void generateShape() override;
+    protected:
+    void generateShapeHG();
+    void generateShapeUU();
+    void generateShapePX();
+    void generateShapeNA();
+    void generateShapeTI();
+    void generateShapeDM();
 };
 
 #endif
