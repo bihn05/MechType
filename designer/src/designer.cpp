@@ -1,10 +1,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
 #include "stroke.h"
 #include "transform.h"
 
-#define WIDTH (800)
+#define WIDTH (200)
 
 void transformStrokeToScreen(sf::ConvexShape& out, sf::ConvexShape& shape, float width, float height, float padding = 40.f) {
     unsigned int pointCount = shape.getPointCount();
@@ -31,11 +32,23 @@ int main() {
     TransformHelper transformer(WIDTH, WIDTH, 0.f);
     
     stroke st;
-    st.startPos = sf::Vector2f(-0.7f, 0);
+    std::vector<stroke> zi;
+
+    st.startPos = sf::Vector2f(-0.7f, 0.2f);
     st.type = STROKE_HENG;
     st.t = 0.03f;
     st.s = 0.04f;
+    st.s1 = 0.f;
     st.l = 1.4f;
+    zi.push_back(st);
+
+    st.startPos = sf::Vector2f(0.f, 0.7f);
+    st.type = STROKE_SHU;
+    st.t = 0.07f;
+    st.s = 0.04f;
+    st.s1 = 0.04f;
+    st.l = 1.4f;
+    zi.push_back(st);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -43,15 +56,15 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
         
         window.clear(sf::Color(0, 0, 0));
 
-        st.generateShape();
+        for (stroke prst : zi) {
+            prst.generateShape();
+            transformStrokeToScreen(displayShape, prst.shape, WIDTH, WIDTH, 0.f);
+            window.draw(displayShape);
+        }
 
-        transformStrokeToScreen(displayShape, st.shape, WIDTH, WIDTH, 0.f);
-
-        window.draw(displayShape);
         window.display();
     }
 
