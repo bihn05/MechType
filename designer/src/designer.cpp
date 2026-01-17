@@ -38,7 +38,7 @@ int main() {
     st.type = STROKE_HENG;
     st.t = 0.03f;
     st.s = 0.04f;
-    st.s1 = 0.f;
+    st.s1 = 0.04f;
     st.l = 1.4f;
     zi.push_back(st);
 
